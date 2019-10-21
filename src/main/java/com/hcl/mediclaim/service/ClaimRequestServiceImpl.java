@@ -64,7 +64,7 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 					&& user.get().getAadhaarNumber() == medicalClaimRequestDto.getAadhaarNumber()) {
 				Optional<Policy> policy = policyRepository.findById(medicalClaimRequestDto.getPolicyId());
 				if (policy.isPresent()) {
-					if (policy.get().getTotalSumInsured() <= medicalClaimRequestDto.getClaimAmount()) {
+					if (policy.get().getTotalSumInsured() >= medicalClaimRequestDto.getClaimAmount()) {
 						ClaimRequest claimRequest = new ClaimRequest();
 
 						BeanUtils.copyProperties(medicalClaimRequestDto, claimRequest);
