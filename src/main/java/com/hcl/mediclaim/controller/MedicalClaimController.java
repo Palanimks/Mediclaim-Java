@@ -72,7 +72,7 @@ public class MedicalClaimController {
 	 * @return List<ClaimDto>
 	 */
 	@GetMapping("/claims/users/{userId}")
-	public ResponseEntity<List<ClaimDto>> getClaims(@PathVariable Integer userId) {
+	public ResponseEntity<List<ClaimDto>> getClaims(@PathVariable Integer userId){
 
 		log.info(" :: getPolicies ---- userId : {}", userId);
 		return new ResponseEntity<>(medicalClaimService.getClaims(userId), HttpStatus.OK);
