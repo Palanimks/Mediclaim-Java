@@ -14,11 +14,15 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
+import com.hcl.mediclaim.dto.ApproveClaimRequestDto;
+import com.hcl.mediclaim.dto.ApproveClaimResponseDto;
 import com.hcl.mediclaim.dto.ClaimDetailsDto;
 import com.hcl.mediclaim.dto.ClaimDto;
 import com.hcl.mediclaim.dto.MedicalClaimResponseDto;
+import com.hcl.mediclaim.exception.InvalidClaimIdException;
 import com.hcl.mediclaim.exception.InvalidPolicyIdException;
 import com.hcl.mediclaim.exception.InvalidUserException;
+import com.hcl.mediclaim.exception.RemarksEmptyException;
 import com.hcl.mediclaim.service.ClaimRequestServiceImpl;
 import com.hcl.mediclaim.service.MedicalClaimServiceImpl;
 
@@ -42,6 +46,9 @@ public class TestMedicalClaimController {
 	
 	ClaimDto claimDto;
 	
+	ApproveClaimRequestDto approveClaimRequestDto =null;
+	ApproveClaimResponseDto approveClaimResponseDto = null;
+	
 	@Before
 	public void setup()
 	{
@@ -62,6 +69,14 @@ public class TestMedicalClaimController {
 		
 		listClaim = new ArrayList<ClaimDto>();
 		listClaim.add(claimDto);
+		
+		approveClaimRequestDto =new ApproveClaimRequestDto();
+		approveClaimRequestDto.setStatus("APPROVED");
+		approveClaimRequestDto.setUserId(102);
+		
+		approveClaimResponseDto = new ApproveClaimResponseDto();
+		approveClaimResponseDto.setMessage("approdev successfully");
+		approveClaimResponseDto.setStatus("Success");
 	}
 	
 	
@@ -92,4 +107,10 @@ public class TestMedicalClaimController {
 		assertEquals(200, response.getStatusCode().value());
 	}
 
+	@Test
+	public void testApproveClaim() throws InvalidClaimIdException, InvalidUserException, RemarksEmptyException {
+		Mockito.when(claimRequestServiceImpl.approveMedicalClaim(1010, approveClaimRequestDto)).thenReturn(approveClaimResponseDto);
+		ResponseEntity<ApproveClaimResponseDto> actualResult = medicalClaimController.approveClaim(1010, approveClaimRequestDto);
+		assertEquals("Success", actualResult.getBody().getStatus());
+	}
 }
