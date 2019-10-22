@@ -1,16 +1,16 @@
 package com.hcl.mediclaim.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class PolicyRequestDto {
-	
-	private int policyId;
+public class LoginResponseDto {
 
+	private String status;
+	private String message;
+	private String userName;
+	private Integer userId;
 }

@@ -21,7 +21,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	 * @return
 	 */
 	@ExceptionHandler(InvalidUserException.class)
-	public ResponseEntity<ErrorResponse> limitExceededException(InvalidUserException ex) {
+	public ResponseEntity<ErrorResponse> invalidUserExceptionHandler(InvalidUserException ex) {
+		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), MediClaimUtility.ERROR_RESPONSE_FAIL);
+
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(InvalidPolicyIdException.class)
+	public ResponseEntity<ErrorResponse> invalidPolicyIdExceptionHandler(InvalidPolicyIdException ex) {
 		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), MediClaimUtility.ERROR_RESPONSE_FAIL);
 
 		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
