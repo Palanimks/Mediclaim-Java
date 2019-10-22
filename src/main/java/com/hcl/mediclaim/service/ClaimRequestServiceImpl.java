@@ -39,7 +39,7 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	ClaimRequestRepository claimRequestRepository;
 
@@ -64,41 +64,25 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 					&& user.get().getAadhaarNumber() == medicalClaimRequestDto.getAadhaarNumber()) {
 				Optional<Policy> policy = policyRepository.findById(medicalClaimRequestDto.getPolicyId());
 				if (policy.isPresent()) {
-					if (policy.get().getTotalSumInsured() >= medicalClaimRequestDto.getClaimAmount()) {
-						ClaimRequest claimRequest = new ClaimRequest();
+					ClaimRequest claimRequest = new ClaimRequest();
 
-						BeanUtils.copyProperties(medicalClaimRequestDto, claimRequest);
-						claimRequest.setClaimDate(LocalDate.now());
-						claimRequest.setStatus(MediClaimUtility.CLAIM_APPROVE_STATUS);
-						claimRequest.setRemarks(MediClaimUtility.APPROVER1_SUCCESS_REMARK);
-						/*save claim object*/
-						ClaimRequest claimRequestResponse  = claimRequestRepository.save(claimRequest);
-						/*prepare response*/
-						responseDto = new MedicalClaimResponseDto();
-						responseDto.setClaimId(claimRequestResponse.getClaimId());
-						responseDto.setStatus(MediClaimUtility.SUCCESS_RESPONSE);
-						responseDto.setMessage(MediClaimUtility.CLAIM_APPROVE_STATUS);
-					} else {
-						ClaimRequest claimRequest = new ClaimRequest();
-
-						BeanUtils.copyProperties(medicalClaimRequestDto, claimRequest);
-						claimRequest.setClaimDate(LocalDate.now());
-						claimRequest.setStatus(MediClaimUtility.CLAIM_PENDING_STATUS);
-						claimRequest.setRemarks(MediClaimUtility.APPROVER1_PENDING_REMARK);
-						
-						/*save claim object*/
-						ClaimRequest claimRequestResponse  = claimRequestRepository.save(claimRequest);
-						/*prepare response*/
-					    responseDto = new MedicalClaimResponseDto();
-						responseDto.setClaimId(claimRequestResponse.getClaimId());
-						responseDto.setStatus(MediClaimUtility.SUCCESS_RESPONSE);
-						responseDto.setMessage(MediClaimUtility.APPROVER1_PENDING_REMARK);
-					}
-				} else {
+					BeanUtils.copyProperties(medicalClaimRequestDto, claimRequest);
+					claimRequest.setClaimDate(LocalDate.now());
+					claimRequest.setStatus(MediClaimUtility.CLAIM_PENDING_STATUS);
+					/*save claim object*/
+					ClaimRequest claimRequestResponse  = claimRequestRepository.save(claimRequest);
+					/*prepare response*/
+					responseDto = new MedicalClaimResponseDto();
+					responseDto.setClaimId(claimRequestResponse.getClaimId());
+					responseDto.setStatus(MediClaimUtility.SUCCESS_RESPONSE);
+					responseDto.setMessage(MediClaimUtility.CLAIM_SUCCESS_REMARK);
+					
+				}
+				 else {
 					throw new InvalidPolicyIdException(MediClaimUtility.INVALID_POLICYID_EXCEPTION);
 				}
 			} else {
-				throw new InvalidUserException(MediClaimUtility.INVALID_USER_EXCEPTION);
+				throw new InvalidUserException(MediClaimUtility.INVALID_USER_EXCEPTION_AADHAR_OR_USERID);
 			}
 		} else {
 			throw new InvalidUserException(MediClaimUtility.INVALID_USER_EXCEPTION);
