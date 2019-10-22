@@ -29,6 +29,7 @@ public class ClaimRequest {
 	private LocalDate admissionDate;
 	private LocalDate dischargeDate;
 	private Double claimAmount;
+	private Double approvedAmount;
 	private String status;
 	private LocalDate claimDate;
 	private Integer approverId;

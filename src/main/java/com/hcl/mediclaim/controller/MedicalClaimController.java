@@ -9,16 +9,21 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.mediclaim.dto.ApproveClaimRequestDto;
+import com.hcl.mediclaim.dto.ApproveClaimResponseDto;
 import com.hcl.mediclaim.dto.ClaimDetailsDto;
 import com.hcl.mediclaim.dto.ClaimDto;
 import com.hcl.mediclaim.dto.MedicalClaimRequestDto;
 import com.hcl.mediclaim.dto.MedicalClaimResponseDto;
+import com.hcl.mediclaim.exception.InvalidClaimIdException;
 import com.hcl.mediclaim.exception.InvalidPolicyIdException;
 import com.hcl.mediclaim.exception.InvalidUserException;
+import com.hcl.mediclaim.exception.RemarksEmptyException;
 import com.hcl.mediclaim.service.ClaimRequestService;
 import com.hcl.mediclaim.service.MedicalClaimService;
 
@@ -62,7 +67,6 @@ public class MedicalClaimController {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
-	
 	/**
 	 * Method will return the list of claim based on login, if APPROVER has login
 	 * then record will show for approver level when SUPPER APPROVER will login
@@ -72,13 +76,12 @@ public class MedicalClaimController {
 	 * @return List<ClaimDto>
 	 */
 	@GetMapping("/claims/users/{userId}")
-	public ResponseEntity<List<ClaimDto>> getClaims(@PathVariable Integer userId){
+	public ResponseEntity<List<ClaimDto>> getClaims(@PathVariable Integer userId) {
 
 		log.info(" :: getPolicies ---- userId : {}", userId);
 		return new ResponseEntity<>(medicalClaimService.getClaims(userId), HttpStatus.OK);
 	}
 
-	
 	/**
 	 * Method show the details of particular claim based on claim id.
 	 * 
@@ -90,5 +93,13 @@ public class MedicalClaimController {
 
 		log.info(" :: getClaimDetails ---- claimId : ", claimId);
 		return new ResponseEntity<>(medicalClaimService.getClainDetails(claimId), HttpStatus.OK);
+	}
+
+	@PutMapping("/claims/{claimId}")
+	public ResponseEntity<ApproveClaimResponseDto> approveClaim(@PathVariable Integer claimId,
+			@RequestBody ApproveClaimRequestDto approveClaimRequestDto)
+			throws InvalidClaimIdException, InvalidUserException, RemarksEmptyException {
+		return new ResponseEntity<>(claimRequestService.approveMedicalClaim(claimId, approveClaimRequestDto),
+				HttpStatus.OK);
 	}
 }

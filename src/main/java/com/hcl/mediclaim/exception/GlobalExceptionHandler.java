@@ -34,5 +34,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(RemarksEmptyException.class)
+	public ResponseEntity<ErrorResponse> remarksEmptyExceptionHandler(RemarksEmptyException ex) {
+		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), MediClaimUtility.ERROR_RESPONSE_FAIL);
+
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	}
 
 }

@@ -7,6 +7,7 @@ import com.hcl.mediclaim.dto.MedicalClaimResponseDto;
 import com.hcl.mediclaim.exception.InvalidClaimIdException;
 import com.hcl.mediclaim.exception.InvalidPolicyIdException;
 import com.hcl.mediclaim.exception.InvalidUserException;
+import com.hcl.mediclaim.exception.RemarksEmptyException;
 
 /**
  * 
@@ -17,6 +18,6 @@ public interface ClaimRequestService {
 	
 	public MedicalClaimResponseDto applyMedicalClaim(MedicalClaimRequestDto medicalClaimRequestDto) throws InvalidUserException, InvalidPolicyIdException;
 	
-	public ApproveClaimResponseDto approveMedicalClaim(int claimId,ApproveClaimRequestDto claimRequestDto) throws InvalidClaimIdException, InvalidUserException;
+	public ApproveClaimResponseDto approveMedicalClaim(int claimId,ApproveClaimRequestDto claimRequestDto) throws InvalidClaimIdException, InvalidUserException, RemarksEmptyException;
 
 }

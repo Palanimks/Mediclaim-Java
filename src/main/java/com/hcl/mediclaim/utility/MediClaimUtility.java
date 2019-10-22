@@ -7,6 +7,7 @@ public class MediClaimUtility {
 	public static final String ERROR_RESPONSE_SUCCESS="Success";
 	
 	public static final String SUCCESS_RESPONSE="Success";
+	public static final String CLAIM_RESPONSE_MESSAGE = "Claim has been ";
 	
 	public static final String INVALID_USER_EXCEPTION ="Invalid user !!!";
 	
@@ -30,4 +31,5 @@ public class MediClaimUtility {
 	
 	public static final String SUPERADMIN_ROLE_NAME = "superadmin";
 
+	public static final String ENTER_REMARKS = "Please enter remarks.";
 }
