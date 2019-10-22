@@ -160,7 +160,7 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 			throw new InvalidUserException(MediClaimUtility.INVALID_USER_EXCEPTION);
 		}
 
-		return null;
+		return approveClaimResponseDto;
 	}
 
 }

@@ -17,9 +17,9 @@ public class MediClaimUtility {
 
 	public static final String INVALID_POLICYID_EXCEPTION = "Invalid policy id !!!";
 
-	public static final String CLAIM_APPROVE_STATUS = "Approve";
+	public static final String CLAIM_APPROVE_STATUS = "APPROVED";
 	
-	public static final String CLAIM_PENDING_STATUS = "Pending";
+	public static final String CLAIM_PENDING_STATUS = "PENDING";
 
 	public static final String CLAIM_SUCCESS_REMARK = "Claim has submitted successfully";
 	
