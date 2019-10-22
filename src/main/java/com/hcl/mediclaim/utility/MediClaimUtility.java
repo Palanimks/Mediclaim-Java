@@ -24,4 +24,10 @@ public class MediClaimUtility {
 	
 	public static final String CLAIM_PENDING_REMARK="Claim has sent for super admin approval";
 
+	public static final String INVALID_CLAIM_ID_EXCEPTION = "Invalid claim id !!!";
+	
+	public static final String ADMIN_ROLE_NAME = "admin";
+	
+	public static final String SUPERADMIN_ROLE_NAME = "superadmin";
+
 }

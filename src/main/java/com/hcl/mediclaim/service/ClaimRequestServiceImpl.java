@@ -7,11 +7,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hcl.mediclaim.dto.ApproveClaimRequestDto;
+import com.hcl.mediclaim.dto.ApproveClaimResponseDto;
 import com.hcl.mediclaim.dto.MedicalClaimRequestDto;
 import com.hcl.mediclaim.dto.MedicalClaimResponseDto;
 import com.hcl.mediclaim.entity.ClaimRequest;
 import com.hcl.mediclaim.entity.Policy;
 import com.hcl.mediclaim.entity.User;
+import com.hcl.mediclaim.exception.InvalidClaimIdException;
 import com.hcl.mediclaim.exception.InvalidPolicyIdException;
 import com.hcl.mediclaim.exception.InvalidUserException;
 import com.hcl.mediclaim.repository.ClaimRequestRepository;
@@ -88,6 +91,54 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 			throw new InvalidUserException(MediClaimUtility.INVALID_USER_EXCEPTION);
 		}
 		return responseDto;
+	}
+    /**
+     * This method is use to approve medical claim 
+     * @param claimId,not null
+     * @param 
+     */
+	@Override
+	public ApproveClaimResponseDto approveMedicalClaim(int claimId, ApproveClaimRequestDto claimRequestDto) throws InvalidClaimIdException, InvalidUserException {
+		log.info("Inside approveMedicalClaim of ClaimRequestServiceImpl");
+		
+		Optional<User> user = userRepository.findById(claimRequestDto.getUserId());
+		if (user.isPresent()) {
+			
+			if(true)
+			{
+				/*get claim request object*/
+				Optional<ClaimRequest>  claimRequest_o = claimRequestRepository.findById(claimId);
+				
+				if(claimRequest_o.isPresent())
+				{
+					ClaimRequest claimRequest  = claimRequest_o.get();
+					Optional<Policy> policy = policyRepository.findById(claimRequest.getPolicyId());
+					if(policy.get().getTotalSumInsured()>=claimRequest.getClaimAmount())
+					{
+						claimRequest.setApprovalDate(LocalDate.now());
+						claimRequest.setApproverId(claimRequestDto.getUserId());
+					}
+					else
+					{
+						//send to super user approval
+					}
+				}
+				else
+				{
+					throw new InvalidClaimIdException(MediClaimUtility.INVALID_CLAIM_ID_EXCEPTION);
+				}
+			}
+			else
+			{
+				// 
+			}
+			
+		}
+		else {
+			throw new InvalidUserException(MediClaimUtility.INVALID_USER_EXCEPTION);
+		}
+
+		return null;
 	}
 
 }
