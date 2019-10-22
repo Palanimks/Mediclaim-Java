@@ -54,12 +54,14 @@ public class MedicalClaimServiceImpl implements MedicalClaimService {
 		log.info(" :: getClaims ----- {}",optionalUser);
 		if(optionalUser.isPresent()) {
 			Optional<Role> optionalRole = roleRepository.findById(optionalUser.get().getRoleId());
+			String status = null;
 			if(optionalRole.isPresent()) {
 				if(optionalRole.get().getRoleName().equals(RoleType.ADMIN.name())) {
-					claimRequests = claimRequestRepository.findByStatus(StatusType.PENDING.name());
+					status = StatusType.PENDING.name();
 				} else if(optionalRole.get().getRoleName().equals(RoleType.SUPER_ADMIN.name())) {
-					claimRequests = claimRequestRepository.findByStatus(StatusType.SUPERPENDING.name());
+					status = StatusType.SUPERPENDING.name();
 				}
+				claimRequests = claimRequestRepository.findByStatus(status);
 			}
 		}
 
