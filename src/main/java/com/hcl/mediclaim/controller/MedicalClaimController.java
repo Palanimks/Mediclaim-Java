@@ -33,7 +33,7 @@ public class MedicalClaimController {
 	private MedicalClaimService medicalClaimService;
 	
 	@GetMapping("/claims/users/{userId}")
-	public ResponseEntity<List<ClaimDto>> getPolicies(@PathVariable Integer userId){
+	public ResponseEntity<List<ClaimDto>> getClaims(@PathVariable Integer userId){
 		return new ResponseEntity<>(medicalClaimService.getClaims(userId), HttpStatus.OK);
 	}
 
