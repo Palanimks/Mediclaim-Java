@@ -15,8 +15,8 @@ public class MedicalClaimRequestDto {
 	
 	private int userId;
 	private int policyId;
-	private String disease;
-	private LocalDate admisionDate;
+	private String diagnosis;
+	private LocalDate admissionDate;
 	private LocalDate dischargeDate;
 	private double claimAmount;
 	private String hospitalName;
