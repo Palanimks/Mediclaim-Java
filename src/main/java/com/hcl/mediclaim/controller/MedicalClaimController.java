@@ -18,8 +18,10 @@ import com.hcl.mediclaim.service.MedicalClaimService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Controller to perform claim
  * 
- * @author Sushil / Laxman
+ * @author Laxman
+ * @date 21-OCT-2019
  *
  */
 
@@ -28,17 +30,35 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @CrossOrigin(allowedHeaders = { "*", "*/" }, origins = { "*", "*/" })
 public class MedicalClaimController {
-	
+
 	@Autowired
 	private MedicalClaimService medicalClaimService;
-	
+
+	/**
+	 * Method will return the list of claim based on login, if APPROVER has login
+	 * then record will show for approver level when SUPPER APPROVER will login
+	 * record will show for SUPPER APPROVER
+	 * 
+	 * @param userId
+	 * @return List<ClaimDto>
+	 */
 	@GetMapping("/claims/users/{userId}")
-	public ResponseEntity<List<ClaimDto>> getPolicies(@PathVariable Integer userId){
+	public ResponseEntity<List<ClaimDto>> getClaims(@PathVariable Integer userId) {
+
+		log.info(" :: getPolicies ---- userId : {}", userId);
 		return new ResponseEntity<>(medicalClaimService.getClaims(userId), HttpStatus.OK);
 	}
 
+	/**
+	 * Method show the details of particular claim based on claim id.
+	 * 
+	 * @param claimId
+	 * @return ClaimDetailsDto
+	 */
 	@GetMapping("/claims/{claimId}")
-	public ResponseEntity<ClaimDetailsDto> getClaimDetails(@PathVariable Integer claimId){
+	public ResponseEntity<ClaimDetailsDto> getClaimDetails(@PathVariable Integer claimId) {
+
+		log.info(" :: getClaimDetails ---- claimId : ", claimId);
 		return new ResponseEntity<>(medicalClaimService.getClainDetails(claimId), HttpStatus.OK);
 	}
 }
