@@ -7,8 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import com.hcl.mediclaim.entity.User;
 
+/**
+ * User Repository interface
+ * 
+ * @author Laxman
+ * @date 21-OCT-2019
+ * 
+ */
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Integer> {
 
 	Optional<User> findByUserId(Integer userId);
 

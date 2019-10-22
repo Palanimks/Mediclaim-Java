@@ -5,12 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 
+ * @author Sushil
+ *
+ */
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PolicyRequestDto {
+public class MedicalClaimResponseDto {
 	
-	private int policyId;
+	private String message;
+	private String status;
+	private int claimId;
 
 }
