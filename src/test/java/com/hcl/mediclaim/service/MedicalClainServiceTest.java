@@ -72,7 +72,7 @@ public class MedicalClainServiceTest {
 	}
 	
 	@Test
-	public void getClaimsTest() {
+	public void testGetClaims() {
 		Mockito.when(userRepository.findById(10)).thenReturn(optionalUser);
 		Mockito.when(roleRepository.findById(optionalUser.get().getRoleId())).thenReturn(optionalRole);
 		Mockito.when(claimRequestRepository.findByStatus("PENDING")).thenReturn(claimRequests);
@@ -82,7 +82,7 @@ public class MedicalClainServiceTest {
 	}
 	
 	@Test
-	public void getClainDetailsTest() {
+	public void testGetClainDetails() {
 		Mockito.when(claimRequestRepository.findById(101)).thenReturn(optionalClaimRequest);
 		Mockito.when(userRepository.findByUserId(optionalClaimRequest.get().getUserId())).thenReturn(optionalUser);
 		ClaimDetailsDto actualResult = medicalClaimServiceImpl.getClainDetails(101);

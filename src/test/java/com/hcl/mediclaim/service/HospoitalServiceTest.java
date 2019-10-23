@@ -58,14 +58,14 @@ public class HospoitalServiceTest {
 	}
 
 	@Test
-	public void getHospitalsTest() {
+	public void testGetHospitals() {
 		Mockito.when(hospitalRepository.findAll()).thenReturn(hospitals);
 		List<HospitalDto> actualResult = hospitalServiceImpl.getHospitals();
 		assertEquals("Fortis", actualResult.get(0).getHospitalname());
 	}
 
 	@Test
-	public void getDiseaseTest() {
+	public void testGetDisease() {
 		Mockito.when(diseaseRepository.findAll()).thenReturn(diseases);
 		List<DiseaseDto> actualResult = hospitalServiceImpl.getDisease();
 		assertEquals("Fever", actualResult.get(0).getDiseaseName());
