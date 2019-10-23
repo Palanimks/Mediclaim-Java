@@ -65,6 +65,7 @@ public class MedicalClainServiceTest {
 		claimRequest.setClaimId(101);
 		claimRequest.setDischargeDate(LocalDate.now().minusDays(2));
 		claimRequest.setHospitalName("Fortis");
+		claimRequest.setUserId(10);
 		claimRequests = new ArrayList<>();
 		claimRequests.add(claimRequest);
 		optionalClaimRequest = Optional.of(claimRequest); 
@@ -75,6 +76,7 @@ public class MedicalClainServiceTest {
 		Mockito.when(userRepository.findById(10)).thenReturn(optionalUser);
 		Mockito.when(roleRepository.findById(optionalUser.get().getRoleId())).thenReturn(optionalRole);
 		Mockito.when(claimRequestRepository.findByStatus("PENDING")).thenReturn(claimRequests);
+		Mockito.when(userRepository.findById(10)).thenReturn(optionalUser);
 		List<ClaimDto> actualResult = medicalClaimServiceImpl.getClaims(10);
 		assertEquals(101, actualResult.get(0).getClaimId().intValue());
 	}

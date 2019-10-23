@@ -46,7 +46,7 @@ public class MedicalClaimServiceImpl implements MedicalClaimService {
 	public List<ClaimDto> getClaims(Integer userId) {
 
 		log.info(" :: getClaims --- START -- userId : {}",userId);
-		List<ClaimRequest> claimRequests = null;
+		List<ClaimRequest> claimRequests =  new ArrayList<>();
 		List<ClaimDto> claimsDto = new ArrayList<>();
 		
 		Optional<User> optionalUser = userRepository.findById(userId);
@@ -68,6 +68,8 @@ public class MedicalClaimServiceImpl implements MedicalClaimService {
 		claimRequests.stream().forEach(claimRequest -> {
 			ClaimDto claimDto = new ClaimDto();
 			BeanUtils.copyProperties(claimRequest, claimDto);
+			Optional<User> optUser = userRepository.findById(claimRequest.getUserId());
+			claimDto.setUserName(optUser.get().getUserName());
 			claimsDto.add(claimDto);
 		});
 		log.info(" :: getClaims --- END -- ");

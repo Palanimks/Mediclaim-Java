@@ -32,4 +32,6 @@ public class MediClaimUtility {
 	public static final String SUPERADMIN_ROLE_NAME = "superadmin";
 
 	public static final String ENTER_REMARKS = "Please enter remarks.";
+	
+	private MediClaimUtility() {}
 }
