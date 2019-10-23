@@ -2,7 +2,7 @@ package com.hcl.mediclaim.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
-import org.junit.Before;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -10,8 +10,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.hcl.mediclaim.dto.LoginRequestDto;
 import com.hcl.mediclaim.dto.LoginResponseDto;
@@ -23,15 +21,8 @@ public class LoginControllerTest {
 	@InjectMocks
 	LoginController loginControllerMock;
 
-	private MockMvc mockMvc;
-
 	@Mock
 	LoginServiceImpl loginServiceImpl;
-
-	@Before
-	public void setUp() {
-		mockMvc = MockMvcBuilders.standaloneSetup(loginControllerMock).build();
-	}
 
 	@Test
 	public void testLogin() {

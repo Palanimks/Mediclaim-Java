@@ -33,5 +33,9 @@ public class MediClaimUtility {
 
 	public static final String ENTER_REMARKS = "Please enter remarks.";
 	
+	public static final String ROLE_NOT_EXIST_MESSAGE = "Role doesn't exist.";
+	
+	public static final String USER_POLICY_NOT_EXIST_MESSAGE = "User Policy doesn't exist.";
+	
 	private MediClaimUtility() {}
 }

@@ -24,6 +24,8 @@ import com.hcl.mediclaim.exception.InvalidClaimIdException;
 import com.hcl.mediclaim.exception.InvalidPolicyIdException;
 import com.hcl.mediclaim.exception.InvalidUserException;
 import com.hcl.mediclaim.exception.RemarksEmptyException;
+import com.hcl.mediclaim.exception.RoleNotExistException;
+import com.hcl.mediclaim.exception.UserPolicyNotExistException;
 import com.hcl.mediclaim.service.ClaimRequestService;
 import com.hcl.mediclaim.service.MedicalClaimService;
 
@@ -97,8 +99,8 @@ public class MedicalClaimController {
 
 	@PutMapping("/claims/{claimId}")
 	public ResponseEntity<ApproveClaimResponseDto> approveClaim(@PathVariable Integer claimId,
-			@RequestBody ApproveClaimRequestDto approveClaimRequestDto)
-			throws InvalidClaimIdException, InvalidUserException, RemarksEmptyException {
+			@RequestBody ApproveClaimRequestDto approveClaimRequestDto) throws InvalidClaimIdException,
+			InvalidUserException, RemarksEmptyException, RoleNotExistException, UserPolicyNotExistException {
 		return new ResponseEntity<>(claimRequestService.approveMedicalClaim(claimId, approveClaimRequestDto),
 				HttpStatus.OK);
 	}
