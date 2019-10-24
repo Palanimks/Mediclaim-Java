@@ -63,7 +63,7 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 
 		Optional<User> user = userRepository.findById(medicalClaimRequestDto.getUserId());
 		if (user.isPresent()) {
-			if (user.get().getUserId() == MediClaimUtility.USER_ROLE_ID
+			if (user.get().getUserId() == medicalClaimRequestDto.getUserId()
 					&& user.get().getAadhaarNumber() == medicalClaimRequestDto.getAadhaarNumber()) {
 				Optional<Policy> policy = policyRepository.findById(medicalClaimRequestDto.getPolicyId());
 				if (policy.isPresent()) {
@@ -95,7 +95,9 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
     /**
      * This method is use to approve medical claim 
      * @param claimId,not null
-     * @param 
+     * @param ApproveClaimRequestDto ,not null
+     * @exception InvalidClaimIdException throws if claim id does not exist
+     * @exception InvalidUserException throws if claim id does not exist
      */
 	@Override
 	public ApproveClaimResponseDto approveMedicalClaim(int claimId, ApproveClaimRequestDto claimRequestDto) throws InvalidClaimIdException, InvalidUserException {
