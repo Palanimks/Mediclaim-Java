@@ -53,14 +53,14 @@ public class HospitalControllerTest {
 	}
 	
 	@Test
-	public void getHospitalsTest() {
+	public void testGetHospitals() {
 		Mockito.when(hospitalServiceImpl.getHospitals()).thenReturn(hospitalsDto);
 		ResponseEntity<List<HospitalDto>> actualResponse = hospitalController.getHospitals();
 		assertEquals(200, actualResponse.getStatusCode().value());
 	}
 	
 	@Test
-	public void  getDiseaseTest() {
+	public void  testGetDisease() {
 		Mockito.when(hospitalServiceImpl.getDisease()).thenReturn(diseasesDto);
 		ResponseEntity<List<DiseaseDto>> actualResult = hospitalController.getDisease();
 		assertEquals(200, actualResult.getStatusCode().value());

@@ -7,6 +7,7 @@ public class MediClaimUtility {
 	public static final String ERROR_RESPONSE_SUCCESS="Success";
 	
 	public static final String SUCCESS_RESPONSE="Success";
+	public static final String CLAIM_RESPONSE_MESSAGE = "Claim has been ";
 	
 	public static final String INVALID_USER_EXCEPTION ="Invalid user !!!";
 	
@@ -16,9 +17,9 @@ public class MediClaimUtility {
 
 	public static final String INVALID_POLICYID_EXCEPTION = "Invalid policy id !!!";
 
-	public static final String CLAIM_APPROVE_STATUS = "Approve";
+	public static final String CLAIM_APPROVE_STATUS = "APPROVED";
 	
-	public static final String CLAIM_PENDING_STATUS = "Pending";
+	public static final String CLAIM_PENDING_STATUS = "PENDING";
 
 	public static final String CLAIM_SUCCESS_REMARK = "Claim has submitted successfully";
 	
@@ -30,4 +31,11 @@ public class MediClaimUtility {
 	
 	public static final String SUPERADMIN_ROLE_NAME = "superadmin";
 
+	public static final String ENTER_REMARKS = "Please enter remarks.";
+	
+	public static final String ROLE_NOT_EXIST_MESSAGE = "Role doesn't exist.";
+	
+	public static final String USER_POLICY_NOT_EXIST_MESSAGE = "User Policy doesn't exist.";
+	
+	private MediClaimUtility() {}
 }
