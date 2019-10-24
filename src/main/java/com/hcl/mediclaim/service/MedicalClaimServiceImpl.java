@@ -98,5 +98,4 @@ public class MedicalClaimServiceImpl implements MedicalClaimService {
 		log.info(" :: getClainDetails --- END ---");
 		return claimDetailsDto;
 	}
-
 }
