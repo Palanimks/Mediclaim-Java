@@ -112,8 +112,9 @@ public class TestClaimRequestServiceImpl {
      * @throws InvalidUserException
      */
 	@Test(expected = InvalidUserException.class)
-	public void testApplyMedicalClaim() throws InvalidUserException, InvalidPolicyIdException {
-		Mockito.when(userRepository.findById(101)).thenReturn(Optional.of(user));
+	public void testApplyMedicalClaimUserIdNegative() throws InvalidUserException, InvalidPolicyIdException {
+		medicalClaimRequestDto.setUserId(0);
+		Mockito.when(userRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(user));
 		Mockito.when(policyRepository.findById(1)).thenReturn(Optional.of(policy));
 
 		Mockito.when(claimRequestRepository.save(claimRequest)).thenReturn(claimRequest);
@@ -129,8 +130,8 @@ public class TestClaimRequestServiceImpl {
 	 * 
 	 */
 	@Test(expected = InvalidUserException.class)
-	public void testApplyMedicalClaimNegative() throws InvalidUserException, InvalidPolicyIdException {
-		user.setAadhaarNumber(0);
+	public void testApplyMedicalClaimAadharNumberNegative() throws InvalidUserException, InvalidPolicyIdException {
+		user.setUserId(0);
 		Mockito.when(userRepository.findById(101)).thenReturn(Optional.of(user));
 		Mockito.when(policyRepository.findById(1)).thenReturn(Optional.of(policy));
 
