@@ -60,7 +60,7 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 	/**
 	 * This method is use to apply for medical claim
 	 * 
-	 * @param                         MedicalClaimRequestDto, not null
+	 * @param MedicalClaimRequestDto, not null
 	 * @param MedicalClaimResponseDto ,not null
 	 * @throws InvalidUserException     if user does not exist
 	 * @throws InvalidPolicyIdException if policy id does not exist
@@ -106,11 +106,13 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 	/**
 	 * This method is use to approve medical claim
 	 * 
-	 * @param                 claimId,not null
-	 * @param claimRequestDto
-	 * @throws InvalidClaimIdException, InvalidUserException, RemarksEmptyException
-	 * @throws RoleNotExistException 
-	 * @throws UserPolicyNotExistException 
+	 * @param claimId,not null
+	 * @param claimRequestDto ,not null
+	 * @throws InvalidClaimIdException, if claim id does not exist
+	 * @throws InvalidUserException, if user id does not exist
+	 * @throws RemarksEmptyException ,if remark is empty
+	 * @throws RoleNotExistException ,if role does not exist
+	 * @throws UserPolicyNotExistException ,if user policy does not exist
 	 */
 	@Override
 	public ApproveClaimResponseDto approveMedicalClaim(int claimId, ApproveClaimRequestDto claimRequestDto)
