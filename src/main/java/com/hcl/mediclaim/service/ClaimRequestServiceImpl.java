@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
- * @author Sushil This service class is use to apply for medical claim
+ * @author Sushil This service class is use to apply for medical claim and approval
  *
  */
 @Service
@@ -85,6 +85,7 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 					claimRequest.setStatus(MediClaimUtility.CLAIM_PENDING_STATUS);
 					/* save claim object */
 					ClaimRequest claimRequestResponse = claimRequestRepository.save(claimRequest);
+					log.info("claimRequestResponse data ={}",claimRequestResponse.getClaimId());
 					/* prepare response */
 					responseDto = new MedicalClaimResponseDto();
 					responseDto.setClaimId(claimRequestResponse.getClaimId());
@@ -92,12 +93,15 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 					responseDto.setMessage(MediClaimUtility.CLAIM_SUCCESS_REMARK);
 
 				} else {
+					log.error(MediClaimUtility.INVALID_POLICYID_EXCEPTION);
 					throw new InvalidPolicyIdException(MediClaimUtility.INVALID_POLICYID_EXCEPTION);
 				}
 			} else {
+				log.error(MediClaimUtility.INVALID_USER_EXCEPTION_AADHAR_OR_USERID);
 				throw new InvalidUserException(MediClaimUtility.INVALID_USER_EXCEPTION_AADHAR_OR_USERID);
 			}
 		} else {
+			log.error(MediClaimUtility.INVALID_USER_EXCEPTION);
 			throw new InvalidUserException(MediClaimUtility.INVALID_USER_EXCEPTION);
 		}
 		return responseDto;
@@ -122,14 +126,17 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 		ApproveClaimResponseDto approveClaimResponseDto = new ApproveClaimResponseDto();
 		Optional<User> user = userRepository.findById(claimRequestDto.getUserId());
 		if (!user.isPresent()) {
+			log.error(MediClaimUtility.INVALID_USER_EXCEPTION);
 			throw new InvalidUserException(MediClaimUtility.INVALID_USER_EXCEPTION);
 		}
 		Optional<ClaimRequest> optionalClaimRequest = claimRequestRepository.findById(claimId);
 		if (!optionalClaimRequest.isPresent()) {
+			log.error(MediClaimUtility.INVALID_CLAIM_ID_EXCEPTION);
 			throw new InvalidClaimIdException(MediClaimUtility.INVALID_CLAIM_ID_EXCEPTION);
 		}
 		if (claimRequestDto.getStatus().equals(StatusType.REJECTED.name())
 				&& (claimRequestDto.getRemarks() == null || claimRequestDto.getRemarks().isEmpty())) {
+			log.error(MediClaimUtility.ENTER_REMARKS);
 			throw new RemarksEmptyException(MediClaimUtility.ENTER_REMARKS);
 		}
 		
@@ -144,9 +151,11 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 			Optional<Role> optRole = roleRepository.findById(user.get().getRoleId());
 
 			if (!optRole.isPresent()) {
+				log.error(MediClaimUtility.ROLE_NOT_EXIST_MESSAGE);
 				throw new RoleNotExistException(MediClaimUtility.ROLE_NOT_EXIST_MESSAGE);
 			}
 			if (!optionalUserPolicy.isPresent()) {
+				log.error(MediClaimUtility.USER_POLICY_NOT_EXIST_MESSAGE);
 				throw new UserPolicyNotExistException(MediClaimUtility.USER_POLICY_NOT_EXIST_MESSAGE);
 			}
 			
@@ -155,6 +164,7 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 			
 			if (role.getRoleName().equals(RoleType.SUPER_ADMIN.name())
 					&& userPolicy.getBalanceAmount() < claimRequest.getClaimAmount()) {
+				log.info("if user as super admin");
 				claimRequest.setApprovedAmount(optionalUserPolicy.get().getBalanceAmount());
 				optionalUserPolicy.get().setBalanceAmount(0);
 				claimRequest.setStatus(StatusType.APPROVED.name());
@@ -162,11 +172,13 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 				
 			} else if (role.getRoleName().equals(RoleType.ADMIN.name())
 					&& (userPolicy.getBalanceAmount() < claimRequest.getClaimAmount())) {
+				log.info("if user as admin and refer to super admin");
 				claimRequest.setStatus(StatusType.SUPERPENDING.name());
 				approveClaimResponseDto.setMessage(MediClaimUtility.CLAIM_RESPONSE_MESSAGE + StatusType.SUPERPENDING.name());
 				
 			} else if (role.getRoleName().equals(RoleType.ADMIN.name())
 					&& (userPolicy.getBalanceAmount() >= claimRequest.getClaimAmount())) {
+				log.info("if user as  admin and claim has approved");
 				userPolicy.setBalanceAmount(userPolicy.getBalanceAmount() - claimRequest.getClaimAmount());
 				claimRequest.setApprovedAmount(claimRequest.getClaimAmount());
 				claimRequest.setStatus(StatusType.APPROVED.name());
@@ -174,6 +186,7 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
 			}
 			userPolicyRepository.save(userPolicy);
 		} else {
+			log.info("claim has rejected");
 			claimRequest.setStatus(StatusType.REJECTED.name());
 			approveClaimResponseDto.setMessage(MediClaimUtility.CLAIM_RESPONSE_MESSAGE + StatusType.REJECTED.name());
 		}

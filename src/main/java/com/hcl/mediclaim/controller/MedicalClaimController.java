@@ -32,7 +32,7 @@ import com.hcl.mediclaim.service.MedicalClaimService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Controller to perform claim
+ * Controller to perform claim operation
  * 
  * @author Laxman /Sushil
  * @date 21-OCT-2019
@@ -53,10 +53,9 @@ public class MedicalClaimController {
 
 	/**
 	 * This method is use to apply medical claim for user
-	 * 
 	 * @param medicalClaimRequestDto ,not null
 	 * @return MedicalClaimResponseDto , not null
-	 * @throws InvalidUserException     if user does not exist
+	 * @throws InvalidUserException if user does not exist
 	 * @throws InvalidPolicyIdException if policy id does not exist
 	 */
 	@PostMapping("/claims/users")
@@ -73,8 +72,7 @@ public class MedicalClaimController {
 	 * Method will return the list of claim based on login, if APPROVER has login
 	 * then record will show for approver level when SUPPER APPROVER will login
 	 * record will show for SUPPER APPROVER
-	 * 
-	 * @param userId
+	 * @param userId,not null
 	 * @return List<ClaimDto>
 	 */
 	@GetMapping("/claims/users/{userId}")
@@ -86,7 +84,6 @@ public class MedicalClaimController {
 
 	/**
 	 * Method show the details of particular claim based on claim id.
-	 * 
 	 * @param claimId
 	 * @return ClaimDetailsDto
 	 */
@@ -96,7 +93,17 @@ public class MedicalClaimController {
 		log.info(" :: getClaimDetails ---- claimId : ", claimId);
 		return new ResponseEntity<>(medicalClaimService.getClainDetails(claimId), HttpStatus.OK);
 	}
-
+    /**
+     * This method is use to approve claim 
+     * @param claimId ,not null
+     * @param approveClaimRequestDto,not null
+     * @return ApproveClaimResponseDto 
+     * @throws InvalidClaimIdException if claim id does not exist
+     * @throws InvalidUserException if user id does not exist
+     * @throws RemarksEmptyException if remark is empty
+     * @throws RoleNotExistException if role does not exist
+     * @throws UserPolicyNotExistException if user policy does not exist
+     */
 	@PutMapping("/claims/{claimId}")
 	public ResponseEntity<ApproveClaimResponseDto> approveClaim(@PathVariable Integer claimId,
 			@RequestBody ApproveClaimRequestDto approveClaimRequestDto) throws InvalidClaimIdException,

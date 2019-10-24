@@ -85,7 +85,11 @@ public class TestClaimRequestServiceImpl {
 		medicalClaimRequestDto1.setHospitalName("Fortis");
 	}
 
-	
+	 /**
+	  * This unit test case use to  test positive case
+	  * @throws InvalidUserException if user id does not match
+	  * @throws InvalidPolicyIdException if policy id does not match
+	  */
 	  @Test 
 	  public void testApplyMedicalClaimPositive() throws
 	  InvalidUserException, InvalidPolicyIdException {
@@ -103,7 +107,10 @@ public class TestClaimRequestServiceImpl {
 	  
 	  }
 	 
-
+    /**
+     * This unit test is use to validate user id  
+     * @throws InvalidUserException
+     */
 	@Test(expected = InvalidUserException.class)
 	public void testApplyMedicalClaim() throws InvalidUserException, InvalidPolicyIdException {
 		Mockito.when(userRepository.findById(101)).thenReturn(Optional.of(user));
@@ -112,6 +119,41 @@ public class TestClaimRequestServiceImpl {
 		Mockito.when(claimRequestRepository.save(claimRequest)).thenReturn(claimRequest);
 
 		MedicalClaimResponseDto response = claimRequestServiceImpl.applyMedicalClaim(medicalClaimRequestDto);
+
+		assertEquals(101, response.getClaimId());
+
+	}
+	/**
+	 * This unit test use to validate aadhar number
+	 * @throws InvalidUserException if aadhar number does not match
+	 * 
+	 */
+	@Test(expected = InvalidUserException.class)
+	public void testApplyMedicalClaimNegative() throws InvalidUserException, InvalidPolicyIdException {
+		user.setAadhaarNumber(0);
+		Mockito.when(userRepository.findById(101)).thenReturn(Optional.of(user));
+		Mockito.when(policyRepository.findById(1)).thenReturn(Optional.of(policy));
+
+		Mockito.when(claimRequestRepository.save(claimRequest)).thenReturn(claimRequest);
+
+		MedicalClaimResponseDto response = claimRequestServiceImpl.applyMedicalClaim(medicalClaimRequestDto);
+
+		assertEquals(101, response.getClaimId());
+
+	}
+	/**
+	 * This unit test use to validate policy id 
+	 * @throws InvalidPolicyIdException if policy id does not match
+	 */
+	@Test(expected = InvalidPolicyIdException.class)
+	public void testApplyMedicalClaimPolicyIdNegative() throws InvalidUserException, InvalidPolicyIdException {
+		medicalClaimRequestDto1.setPolicyId(0);
+		Mockito.when(userRepository.findById(101)).thenReturn(Optional.of(user));
+		Mockito.when(policyRepository.findById(1)).thenReturn(Optional.of(policy));
+
+		Mockito.when(claimRequestRepository.save(Mockito.any())).thenReturn(claimRequest);
+
+		MedicalClaimResponseDto response = claimRequestServiceImpl.applyMedicalClaim(medicalClaimRequestDto1);
 
 		assertEquals(101, response.getClaimId());
 

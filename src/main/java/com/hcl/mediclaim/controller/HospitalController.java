@@ -17,7 +17,7 @@ import com.hcl.mediclaim.service.HospitalService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Common controller for Hospital
+ * Common controller for Hospital for getting name of hospital and name of disease
  * 
  * @author Laxman
  * @date 21-OCT-2019
@@ -36,7 +36,6 @@ public class HospitalController {
 	/**
 	 * Method will return the list of hospitals, user is allowed to claim for listed
 	 * hospitals
-	 * 
 	 * @return List<HospitalDto>
 	 * 
 	 */

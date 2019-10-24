@@ -20,7 +20,11 @@ import com.hcl.mediclaim.utility.RoleType;
 import com.hcl.mediclaim.utility.StatusType;
 
 import lombok.extern.slf4j.Slf4j;
-
+/**
+ * 
+ * @author Laxman
+ *
+ */
 @Slf4j
 @Service
 public class MedicalClaimServiceImpl implements MedicalClaimService {
